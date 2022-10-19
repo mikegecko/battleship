@@ -1,3 +1,5 @@
+const { moduleExpression } = require("@babel/types");
+
 class Ship {
     constructor(options = {}){
         this.name = options.name || 'no name';
@@ -7,6 +9,7 @@ class Ship {
     }
     hit(){
         this.hits++;
+        return(this.hits);
     }
     getName(){
         return(this.name);
@@ -15,7 +18,7 @@ class Ship {
         return(this.length);
     }
     isSunk(){
-        if(this.hits == this.length){
+        if(this.hits == this.length || this.hits > this.length){
             this.sunk = true;
         }
         return(this.sunk);
@@ -27,3 +30,4 @@ const destroyer = new Ship(data);
 destroyer.hit();
 
 console.log(destroyer);
+module.exports = Ship;
