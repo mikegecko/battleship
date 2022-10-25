@@ -1,33 +1,53 @@
 const { moduleExpression } = require("@babel/types");
+const Ship = require('./ship.js');
 
-class Ship {
-    constructor(options = {}){
-        this.name = options.name || 'no name';
-        this.length = options.length || null;
-        this.hits = 0;
-        this.sunk = false;
+class Gameboard{
+    constructor(){
+        this.misses = [];
+        this.hits = [];
+        this.ships = [];
     }
-    hit(){
-        this.hits++;
-        return(this.hits);
-    }
-    getName(){
-        return(this.name);
-    }
-    getLength(){
-        return(this.length);
-    }
-    isSunk(){
-        if(this.hits == this.length || this.hits > this.length){
-            this.sunk = true;
+    //Refactor so coord is plaired with ship object, not other way around ?
+    placeShip(options){
+        if(options == null){
+            options = {name:"placeholder", length: 5, coord:[1,3]}
         }
-        return(this.sunk);
+        const ship = new Ship(options);
+        this.ships.push(ship);
+        return(ship);
+    }
+    receiveAttack(x,y){
+        //determines whether or not the attack hit a ship and then sends the ‘hit’ function to the correct ship, or records the coordinates of the missed shot
+        for (let index = 0; index < this.ships.length; index++) {
+            const element = this.ships[index];
+            if(element.coord[0] == x){
+                if(element.coord[1] == y){
+                    this.hits.push([x,y]);
+                    element.hit();
+                    return('hit');
+                }
+                else{
+                    this.misses.push([x,y]);
+                    return('miss');
+                }
+            }
+            else{
+                this.misses.push([x,y]);
+                return('miss');
+            }
+        }
     }
 }
 
-const data = {name: "Destroyer", length: 5}
-const destroyer = new Ship(data);
-destroyer.hit();
+class Player{
+    constructor(){
 
-console.log(destroyer);
-module.exports = Ship;
+    }
+
+}
+// const data = {name: "Destroyer", length: 5}
+// const destroyer = new Ship(data);
+// destroyer.hit();
+// console.log(destroyer);
+
+module.exports = Gameboard;

@@ -1,23 +1,17 @@
-const Ship = require('./main.js');
-const testData = {name:'test', length: 4}
-const testShip = new Ship(testData);
+const Gameboard = require('./main.js');
 
-test('Ship assignment', () => {    
-    expect(testShip).toEqual({name: 'test', length: 4, hits: 0, sunk: false});
+const gb = new Gameboard();
+const options = {name:"placeholder", length: 5, coord:[1,3], hits: 0, sunk: false}
+test('Gameboard placing ship', () => {
+    expect(gb.placeShip(options)).toEqual(options)
+    expect(gb.ships).toEqual([options])
 });
-test('Ship name', () => {
-    expect(testShip.getName()).toBe('test')
+test('Gameboard receiving a hit', () => {
+    expect(gb.receiveAttack(1, 3)).toBe('hit')
+    expect(gb.ships[0].hits).toBe(1)
+    expect(gb.hits[0]).toEqual([1,3])
 });
-test('Ship length', () => {
-    expect(testShip.getLength()).toBe(4);
+test('Gameboard receiving a miss', () => {
+    expect(gb.receiveAttack(5, 5)).toEqual('miss')
+    expect(gb.misses[0]).toEqual([5,5])
 });
-test('Ship hit method', () => {
-    expect(testShip.hit()).toBe(1);
-})
-test('Ship Sinking method', () => {
-    expect(testShip.isSunk()).toBe(false);
-    testShip.hit();
-    testShip.hit();
-    testShip.hit();
-    expect(testShip.isSunk()).toBe(true);
-})
