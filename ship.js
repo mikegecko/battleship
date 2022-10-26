@@ -6,8 +6,13 @@ class Ship {
         this.sunk = false;
         this.coord = options.coord || [null,null];
     }
-    hit(){
-        this.hits++;
+    hit(int){
+        if(int !== undefined){
+            this.hits += int;
+        }
+        else{
+            this.hits++;
+        }
         return(this.hits);
     }
     getName(){
@@ -22,6 +27,9 @@ class Ship {
     isSunk(){
         if(this.hits == this.length || this.hits > this.length){
             this.sunk = true;
+        }
+        else{
+            this.sunk = false;
         }
         return(this.sunk);
     }
