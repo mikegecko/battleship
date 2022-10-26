@@ -37,6 +37,24 @@ class Gameboard{
             }
         }
     }
+    fleetStatus(){
+        //reports whether or not all of the ships have been sunk
+        let sunkShips = 0;
+        for (let index = 0; index < this.ships.length; index++) {
+            const ship = this.ships[index];
+            if(ship.isSunk()){
+                sunkShips++;
+            }
+        }
+        if(sunkShips == this.ships.length){
+            //All ships sunk
+            return(false);
+        }
+        else{
+            //Not all sunk
+            return(true);
+        }
+    }
 }
 
 class Player{
