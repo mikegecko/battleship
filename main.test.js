@@ -15,3 +15,10 @@ test('Gameboard receiving a miss', () => {
     expect(gb.receiveAttack(5, 5)).toEqual('miss')
     expect(gb.misses[0]).toEqual([5,5])
 });
+test('Fleet status alive', () => {
+    expect(gb.fleetStatus()).toBe(true);
+})
+test('Fleet status destroyed', () => {
+    gb.ships[0].hit(5);
+    expect(gb.fleetStatus()).toBe(false);
+})
