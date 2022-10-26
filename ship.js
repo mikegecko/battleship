@@ -9,9 +9,11 @@ class Ship {
     hit(int){
         if(int !== undefined){
             this.hits += int;
+            this.isSunk();
         }
         else{
             this.hits++;
+            this.isSunk();
         }
         return(this.hits);
     }
