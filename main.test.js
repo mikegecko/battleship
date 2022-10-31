@@ -1,6 +1,6 @@
 
 const Gameboard = require('./main').Gameboard;
-const Player = require('./main.js').Player;
+const Player = require('./player');
 const randomIntFromInterval = require('./main.js');
 const gb = new Gameboard();
 const options = {name:"placeholder", length: 5, coord:[1,3], hits: 0, sunk: false}
