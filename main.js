@@ -2,10 +2,11 @@ const {
     moduleExpression
 } = require("@babel/types");
 const Ship = require("./ship.js");
-const Player = require('./player.js')
-
+const Player = require("./player.js");
 class Gameboard {
+    
     constructor() {
+        
         this.misses = [];
         this.hits = [];
         this.ships = [];
@@ -15,8 +16,8 @@ class Gameboard {
         if (options == null) {
             options = {
                 name: "placeholder",
-                length: 5,
-                coord: [1, 3],
+                length: 2,
+                coord: [1,3],
             };
         }
         const ship = new Ship(options);
@@ -42,8 +43,8 @@ class Gameboard {
             }
         }
         //No ships placed
-        console.log('No ships placed');
-        this.misses.push([x,y]);
+        console.log("No ships placed");
+        this.misses.push([x, y]);
         return "miss";
     }
     fleetStatus() {
@@ -65,13 +66,20 @@ class Gameboard {
     }
 }
 
-const compBoard = new Gameboard();
-const playerBoard = new Gameboard();
 
+//Main Game Loop
+function game() {
+    //Initializing objects
+    const compBoard = new Gameboard();
+    const playerBoard = new Gameboard();
+    //Place ships TEMP
+    compBoard.placeShip(options)
+    playerBoard.placeShip(options)
+    //Computer player
+    const cp = new Player(playerBoard, compBoard, true);
+    //Player
+    const pl = new Player(playerBoard, compBoard, false);
 
+}
 
-const cp = new Player(playerBoard, compBoard, true);
-console.log(cp.aiPlay());
-module.exports = {
-    Gameboard,
-};
+module.exports = Gameboard;
