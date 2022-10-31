@@ -6,12 +6,10 @@ const Player = require("./player.js");
 class Gameboard {
     
     constructor() {
-        
         this.misses = [];
         this.hits = [];
         this.ships = [];
     }
-    //Refactor so coord is plaired with ship object, not other way around ?
     placeShip(options) {
         if (options == null) {
             options = {
@@ -73,13 +71,33 @@ function game() {
     const compBoard = new Gameboard();
     const playerBoard = new Gameboard();
     //Place ships TEMP
-    compBoard.placeShip(options)
-    playerBoard.placeShip(options)
+    const shipProto = createShips();
+    compBoard.placeShip(shipProto[0]);
+    playerBoard.placeShip(shipProto[1]);
     //Computer player
     const cp = new Player(playerBoard, compBoard, true);
     //Player
     const pl = new Player(playerBoard, compBoard, false);
-
+    //TODO: fix coordinates and make it easier to place ships
 }
 
+function createShips(){
+    let shiparr = [];
+    const carrier = {name: "Carrier", length: 5, coord: genCoords() };
+    const battleship = {name: "Battleship", length: 4, coord: genCoords()};
+    const destroyer = {name: "Cruiser", length: 3, coord: genCoords()};
+    const submarine = {name: "Submarine", length: 3, coord: genCoords()};
+    const patrolboat = {name: "Patrol Boat", length: 2, coord: genCoords()};
+    shiparr.push(carrier,battleship,destroyer,submarine,patrolboat);
+    return(shiparr);
+}
+function genCoords(){
+    const x = randomIntFromInterval(1, 7);
+    const y = randomIntFromInterval(1, 7);
+    return [x,y]
+}
+function randomIntFromInterval(min, max) {
+    return Math.floor(Math.random() * (max - min + 1) + min);
+}
+game();
 module.exports = Gameboard;
