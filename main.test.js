@@ -1,5 +1,5 @@
 
-const Gameboard = require('./main').Gameboard;
+const Gameboard = require('./main');
 const Player = require('./player');
 const randomIntFromInterval = require('./main.js');
 const gb = new Gameboard();
@@ -41,3 +41,6 @@ test('Computer move', () => {
 test('Player move', () => {
     expect(pp.play(0,0)).toBe('miss')
 })
+// test('Random num generation', () => {
+//     expect(randomIntFromInterval(1,7)).toBeGreaterThanOrEqual(1)
+// })

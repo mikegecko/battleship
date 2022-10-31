@@ -1,5 +1,5 @@
 
-module.exports = class Player {
+class Player {
     constructor(plBoard, cpBoard, isComp) {
         this.isComputer = isComp || false;
         this.plBoard = plBoard;
@@ -39,9 +39,11 @@ module.exports = class Player {
             return result;
         }
     }
-}
+};
+
 
 function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
+module.exports = Player;
