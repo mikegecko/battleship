@@ -32,7 +32,7 @@ test('Ai move generation', () => {
     const testmve = cp.aiPlay();
     for (let index = 0; index < 2; index++) {
         expect(testmve[index]).toBeGreaterThanOrEqual(1);
-        expect(testmve[index]).toBeLessThanOrEqual(10);
+        expect(testmve[index]).toBeLessThanOrEqual(7);
     }
 })
 test('Computer move', () => {
