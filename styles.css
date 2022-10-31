@@ -1,0 +1,17 @@
+.header{
+    width: 100%;
+    height: 3rem;
+    background-color: rgb(75, 90, 93);
+}
+.body-container{
+    display: flex;
+    height: calc(100vh - 3rem);
+}
+.sidebar{
+    width: 20%;
+    background-color: rgb(85, 88, 89);
+}
+.game-area{
+    background-color: blue;
+    width: 100%;
+}
