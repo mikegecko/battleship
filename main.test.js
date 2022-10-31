@@ -1,7 +1,13 @@
-const Gameboard = require('./main.js');
 
+const Gameboard = require('./main').Gameboard;
+const Player = require('./main.js').Player;
+const randomIntFromInterval = require('./main.js');
 const gb = new Gameboard();
 const options = {name:"placeholder", length: 5, coord:[1,3], hits: 0, sunk: false}
+const pb = new Gameboard();
+const cb = new Gameboard();
+const cp = new Player(pb, cb, true);
+const pp = new Player(pb,cb);
 test('Gameboard placing ship', () => {
     expect(gb.placeShip(options)).toEqual(options)
     expect(gb.ships).toEqual([options])
@@ -21,4 +27,17 @@ test('Fleet status alive', () => {
 test('Fleet status destroyed', () => {
     gb.ships[0].hit(5);
     expect(gb.fleetStatus()).toBe(false);
+})
+test('Ai move generation', () => {
+    const testmve = cp.aiPlay();
+    for (let index = 0; index < 2; index++) {
+        expect(testmve[index]).toBeGreaterThanOrEqual(1);
+        expect(testmve[index]).toBeLessThanOrEqual(10);
+    }
+})
+test('Computer move', () => {
+    expect(cp.play(cp.aiPlay())).toBe('miss')
+})
+test('Player move', () => {
+    expect(pp.play(0,0)).toBe('miss')
 })
