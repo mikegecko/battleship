@@ -5,6 +5,8 @@ class Ship {
         this.hits = 0;
         this.sunk = false;
         this.coord = options.coord || [null,null];
+        //Rework coords to have start and end points -
+        //or to have an array of all squares covered
     }
     hit(int){
         if(int !== undefined){
