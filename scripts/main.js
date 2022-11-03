@@ -17,7 +17,8 @@ class Gameboard {
             options = {
                 name: "placeholder",
                 length: 2,
-                coord: [1,3],
+                head: [1,3],
+                rot: 'down',
             };
         }
         const ship = new Ship(options);
@@ -78,13 +79,16 @@ class DOMinterface {
         const mark = "x";
         for (let index = 0; index < shipArr.length; index++) {
             const element = shipArr[index];
-            const x = element.coord[0]
-            const y = element.coord[1]
-            const gridItem = document.createElement('div');
-            gridItem.textContent = mark;
-            gridItem.style.gridColumn = x;
-            gridItem.style.gridRow = y;
-            this.shipArea.appendChild(gridItem);
+            console.log(element);
+            for (let index = 0; index < element.coord.length; index++) {
+                const coor = element.coord[index];
+                const gridItem = document.createElement('div');
+                gridItem.textContent = mark;
+                gridItem.style.gridColumn = coor[0];
+                gridItem.style.gridRow = coor[1];
+                this.shipArea.appendChild(gridItem);
+            }
+            
         }
     }
     renderShots(playerObj){
@@ -101,25 +105,27 @@ function game() {
     const UI = new DOMinterface();
     //Place ships TEMP
     const shipProto = createShips();
-    compBoard.placeShip(shipProto[0]);
-    playerBoard.placeShip(shipProto[1]);
-    playerBoard.placeShip(shipProto[2]);
+    // compBoard.placeShip(shipProto[0]);
+    // playerBoard.placeShip(shipProto[1]);
+    // playerBoard.placeShip(shipProto[2]);
+    shipProto.forEach(element => {
+        playerBoard.placeShip(element);
+    });
     //Computer player
     const cp = new Player(playerBoard, compBoard, true);
     //Player
     const pl = new Player(playerBoard, compBoard, false);
-    //TODO: fix coordinates and make it easier to place ships
     UI.renderShips(playerBoard.getShips());
     console.log('Ran successfully');
 }
 
 function createShips(){
     let shiparr = [];
-    const carrier = {name: "Carrier", length: 5, coord: genCoords() };
-    const battleship = {name: "Battleship", length: 4, coord: genCoords()};
-    const destroyer = {name: "Cruiser", length: 3, coord: genCoords()};
-    const submarine = {name: "Submarine", length: 3, coord: genCoords()};
-    const patrolboat = {name: "Patrol Boat", length: 2, coord: genCoords()};
+    const carrier = {name: "Carrier", length: 5, head: genCoords() };
+    const battleship = {name: "Battleship", length: 4, head: genCoords()};
+    const destroyer = {name: "Cruiser", length: 3, head: genCoords()};
+    const submarine = {name: "Submarine", length: 3, head: genCoords()};
+    const patrolboat = {name: "Patrol Boat", length: 2, head: genCoords()};
     shiparr.push(carrier,battleship,destroyer,submarine,patrolboat);
     return(shiparr);
 }
@@ -132,5 +138,5 @@ function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 game();
-console.log('ran');
+console.log('Fin');
 //module.exports = Gameboard;
