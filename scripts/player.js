@@ -7,8 +7,8 @@ class Player {
     }
     aiPlay() {
         //Method for computer making random plays
-        const x = randomIntFromInterval(1, 7);
-        const y = randomIntFromInterval(1, 7);
+        const x = randomIntFromInterval(1, 10);
+        const y = randomIntFromInterval(1, 10);
         for (let index = 0; index < this.plBoard.misses.length; index++) {
             const element = this.plBoard.misses[index];
             if (element[0] == x) {
