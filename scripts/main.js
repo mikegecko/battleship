@@ -18,7 +18,7 @@ class Gameboard {
                 name: "placeholder",
                 length: 2,
                 head: [1,3],
-                rot: 'down',
+                rot: 1,
             };
         }
         const ship = new Ship(options);
@@ -86,6 +86,7 @@ class DOMinterface {
                 gridItem.textContent = mark;
                 gridItem.style.gridColumn = coor[0];
                 gridItem.style.gridRow = coor[1];
+                gridItem.classList.add('ship')
                 this.shipArea.appendChild(gridItem);
             }
             
@@ -130,8 +131,8 @@ function createShips(){
     return(shiparr);
 }
 function genCoords(){
-    const x = randomIntFromInterval(1, 7);
-    const y = randomIntFromInterval(1, 7);
+    const x = randomIntFromInterval(1, 10);
+    const y = randomIntFromInterval(1, 10);
     return [x,y]
 }
 function randomIntFromInterval(min, max) {
