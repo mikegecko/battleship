@@ -62,23 +62,43 @@ class Gameboard {
             return true;
         }
     }
+    getShips(){
+        return(this.ships);
+    }
 }
 
+class DOMinterface {
+    constructor(params) {
+        const shotArea = document.querySelector(".shot-container");
+        const shipArea = document.querySelector(".ship-container")
+    }   
+    renderShips(shipArr){
+        const mark = "x";
+        
+    }
+    renderShots(playerObj){
+
+    }
+
+}
 
 //Main Game Loop
 function game() {
     //Initializing objects
     const compBoard = new Gameboard();
     const playerBoard = new Gameboard();
+    const interface = new DOMinterface();
     //Place ships TEMP
     const shipProto = createShips();
     compBoard.placeShip(shipProto[0]);
     playerBoard.placeShip(shipProto[1]);
+    playerBoard.placeShip(shipProto[2]);
     //Computer player
     const cp = new Player(playerBoard, compBoard, true);
     //Player
     const pl = new Player(playerBoard, compBoard, false);
     //TODO: fix coordinates and make it easier to place ships
+    interface.renderShips(playerBoard.getShips())
 }
 
 function createShips(){
