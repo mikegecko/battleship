@@ -1,8 +1,10 @@
-const {
-    moduleExpression
-} = require("@babel/types");
-const Ship = require("./ship.js");
-const Player = require("./player.js");
+// const {
+//     moduleExpression
+// } = require("@babel/types");
+// const Ship = require("./ship.js");
+// const Player = require("./player.js");
+import {Ship} from "./ship.js"
+import {Player} from "./player.js"
 class Gameboard {
     
     constructor() {
@@ -69,12 +71,21 @@ class Gameboard {
 
 class DOMinterface {
     constructor(params) {
-        const shotArea = document.querySelector(".shot-container");
-        const shipArea = document.querySelector(".ship-container")
+        this.shotArea = document.querySelector(".shot-container");
+        this.shipArea = document.querySelector(".ship-container")
     }   
     renderShips(shipArr){
         const mark = "x";
-        
+        for (let index = 0; index < shipArr.length; index++) {
+            const element = shipArr[index];
+            const x = element.coord[0]
+            const y = element.coord[1]
+            const gridItem = document.createElement('div');
+            gridItem.textContent = mark;
+            gridItem.style.gridColumn = x;
+            gridItem.style.gridRow = y;
+            this.shipArea.appendChild(gridItem);
+        }
     }
     renderShots(playerObj){
 
@@ -87,7 +98,7 @@ function game() {
     //Initializing objects
     const compBoard = new Gameboard();
     const playerBoard = new Gameboard();
-    const interface = new DOMinterface();
+    const UI = new DOMinterface();
     //Place ships TEMP
     const shipProto = createShips();
     compBoard.placeShip(shipProto[0]);
@@ -98,7 +109,8 @@ function game() {
     //Player
     const pl = new Player(playerBoard, compBoard, false);
     //TODO: fix coordinates and make it easier to place ships
-    interface.renderShips(playerBoard.getShips())
+    UI.renderShips(playerBoard.getShips());
+    console.log('Ran successfully');
 }
 
 function createShips(){
@@ -120,4 +132,5 @@ function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 game();
-module.exports = Gameboard;
+console.log('ran');
+//module.exports = Gameboard;

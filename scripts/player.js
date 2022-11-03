@@ -46,4 +46,5 @@ function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 
-module.exports = Player;
+//module.exports = Player;
+export {Player}
