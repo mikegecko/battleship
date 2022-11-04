@@ -72,7 +72,7 @@ class Gameboard {
 
 class DOMinterface {
     constructor(params) {
-        this.shotArea = document.querySelector(".shot-container");
+        this.shotArea = document.querySelector('.shot-container');
         this.shipArea = document.querySelector(".ship-container")
     }   
     renderShips(shipArr){
@@ -92,10 +92,29 @@ class DOMinterface {
             
         }
     }
+    shotHandler(callback){
+        console.log(callback.target.id);
+    }
+    createShotSquares(){
+
+        for (let irow = 0; irow < 10; irow++) {
+            for (let icolumn = 0; icolumn < 10; icolumn++) {
+                const square = document.createElement('div');
+                square.style.gridColumn = icolumn;
+                square.style.gridRow = irow;
+                square.id = `${icolumn}-${irow}`;
+                square.classList.add('item');
+                square.addEventListener("click",this.shotHandler);
+                this.shotArea.appendChild(square);
+            }
+        }
+    }
     renderShots(playerObj){
 
     }
+    update(){
 
+    }
 }
 
 //Main Game Loop
@@ -104,6 +123,7 @@ function game() {
     const compBoard = new Gameboard();
     const playerBoard = new Gameboard();
     const UI = new DOMinterface();
+    UI.createShotSquares();
     //Place ships TEMP
     const shipProto = createShips();
     // compBoard.placeShip(shipProto[0]);
