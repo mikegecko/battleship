@@ -100,8 +100,8 @@ class DOMinterface {
         for (let irow = 0; irow < 10; irow++) {
             for (let icolumn = 0; icolumn < 10; icolumn++) {
                 const square = document.createElement('div');
-                square.style.gridColumn = icolumn;
-                square.style.gridRow = irow;
+                square.style.gridColumn = icolumn+1;
+                square.style.gridRow = irow+1;
                 square.id = `${icolumn}-${irow}`;
                 square.classList.add('item');
                 square.addEventListener("click",this.shotHandler);
