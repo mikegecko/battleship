@@ -37,10 +37,11 @@ body{
     grid-template-rows: repeat(10,1fr);
 }
 .item{
-    background-color: aqua;
     text-align: center;
     padding: 1rem;
-    
+}
+.item:hover{
+    background-color: rgb(53, 53, 231);
 }
 .ship{
     background-color: rgb(74, 73, 69);
