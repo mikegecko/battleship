@@ -9,7 +9,9 @@ class Ship {
         this.coord = null;
         this.automaticShipPosition = function () {
             // Checks for the first valid rotation of the ship
+            //TODO: Separate coord gen from valid placement - do valid placement check in gameboard method
             //  down:1 left:2 up:3 right:4
+            //TODO: add in check for ship overlap
             const coordArr = [];
             let hx = this.head[0];
             let hy = this.head[1];
@@ -25,6 +27,7 @@ class Ship {
                     }
 
                 } else {
+                    //This extends the ship according to length
                     //Up
                     if (this.rotation == 3) {
                         coordArr.push([hx, hy--]);
