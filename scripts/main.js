@@ -22,8 +22,33 @@ class Gameboard {
             };
         }
         const ship = new Ship(options);
-        this.ships.push(ship);
-        return ship;
+        if(this.shipPlacementValid(ship)){
+            this.ships.push(ship);
+            return ship;
+        }
+        else{
+            console.log('Creating new ship');
+            options.head = genCoords();
+            this.placeShip(options);
+            //We need to create a new ship
+        }
+    }
+    shipPlacementValid(shipObj){
+        const checkCoords = shipObj.coord;
+        for (let j = 0; j < checkCoords.length; j++) {
+            const element = checkCoords[j];
+            for (let index = 0; index < this.ships.length; index++) {
+                const ship = this.ships[index];
+                for (let index = 0; index < ship.coord.length; index++) {
+                    const xy = ship.coord[index];
+                    if(element[0] == xy[0] && element[1] == xy[1]){
+                        console.log('Intersection detected');
+                        return(false);
+                    }
+                }
+            }
+        }
+        return(true);
     }
     receiveAttack(x, y) {
         //determines whether or not the attack hit a ship and then sends the ‘hit’ function to the correct ship, or records the coordinates of the missed shot

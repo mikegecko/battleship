@@ -12,7 +12,7 @@ class Ship {
             //TODO: Separate coord gen from valid placement - do valid placement check in gameboard method
             //  down:1 left:2 up:3 right:4
             //TODO: add in check for ship overlap
-            const coordArr = [];
+            let coordArr = [];
             let hx = this.head[0];
             let hy = this.head[1];
             for (let index = 0; index < this.length; index++) {
@@ -20,10 +20,12 @@ class Ship {
                     index = 0;
                     hx = this.head[0];
                     hy = this.head[1];
+                    coordArr = [];
                     if (this.rotation == 4) {
                         console.log("No placeable position!");
                     } else {
                         this.rotation++;
+                        console.log("Rotating ship");
                     }
 
                 } else {
