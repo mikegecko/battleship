@@ -144,6 +144,7 @@ class DOMinterface {
 
 //Main Game Loop
 function game() {
+    //TODO: Turn this into a module & add turn, gameEnd method
     //Initializing objects
     const compBoard = new Gameboard();
     const playerBoard = new Gameboard();

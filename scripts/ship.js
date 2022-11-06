@@ -9,9 +9,9 @@ class Ship {
         this.coord = null;
         this.automaticShipPosition = function () {
             // Checks for the first valid rotation of the ship
-            //TODO: Separate coord gen from valid placement - do valid placement check in gameboard method
+            //TODO: Move coord checking to gameboard object
+            //      but keep coord generation here?
             //  down:1 left:2 up:3 right:4
-            //TODO: add in check for ship overlap
             let coordArr = [];
             let hx = this.head[0];
             let hy = this.head[1];
