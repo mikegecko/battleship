@@ -101,13 +101,13 @@ class DOMinterface {
         this.shipArea = document.querySelector(".ship-container")
     }   
     renderShips(shipArr){
-        const mark = "x";
         for (let index = 0; index < shipArr.length; index++) {
-            const element = shipArr[index];
-            console.log(element);
-            for (let index = 0; index < element.coord.length; index++) {
-                const coor = element.coord[index];
+            const ship = shipArr[index];
+            console.log(ship);
+            for (let index = 0; index < ship.coord.length; index++) {
+                const coor = ship.coord[index];
                 const gridItem = document.createElement('div');
+                const mark = ship.marker;
                 gridItem.textContent = mark;
                 gridItem.style.gridColumn = coor[0];
                 gridItem.style.gridRow = coor[1];
@@ -144,7 +144,7 @@ class DOMinterface {
 
 //Main Game Loop
 function game() {
-    //TODO: Turn this into a module & add turn, gameEnd method
+    //TODO: Turn this into a module & add turn, ggameEnd method
     //Initializing objects
     const compBoard = new Gameboard();
     const playerBoard = new Gameboard();
@@ -170,7 +170,7 @@ function createShips(){
     let shiparr = [];
     const carrier = {name: "Carrier", length: 5, head: genCoords() };
     const battleship = {name: "Battleship", length: 4, head: genCoords()};
-    const destroyer = {name: "Cruiser", length: 3, head: genCoords()};
+    const destroyer = {name: "Destroyer", length: 3, head: genCoords()};
     const submarine = {name: "Submarine", length: 3, head: genCoords()};
     const patrolboat = {name: "Patrol Boat", length: 2, head: genCoords()};
     shiparr.push(carrier,battleship,destroyer,submarine,patrolboat);

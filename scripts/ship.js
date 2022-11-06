@@ -7,6 +7,7 @@ class Ship {
         this.head = options.head || [null, null];
         this.rotation = options.rot || 1;
         this.coord = null;
+        this.marker = options.marker || this.name.charAt(0);
         this.automaticShipPosition = function () {
             // Checks for the first valid rotation of the ship
             //TODO: Move coord checking to gameboard object
