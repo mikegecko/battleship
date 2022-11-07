@@ -12,6 +12,7 @@ class Ship {
             // Checks for the first valid rotation of the ship
             //TODO: Move coord checking to gameboard object
             //      but keep coord generation here?
+            //TODO: Fix objects missing coordinate data sometimes
             //  down:1 left:2 up:3 right:4
             let coordArr = [];
             let hx = this.head[0];
@@ -27,7 +28,6 @@ class Ship {
                     } else {
                         this.rotation++;
                         console.log(`Rotating ${this.name}`);
-                        index = 0;
                     }
 
                 } else {
