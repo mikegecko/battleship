@@ -17,7 +17,7 @@ class Ship {
             let hx = this.head[0];
             let hy = this.head[1];
             for (let index = 0; index < this.length; index++) {
-                if (hx > 10 || hy > 10 || hx < 0 || hy < 0) {
+                if (hx > 10 || hy > 10 || hx <= 0 || hy <= 0) {
                     index = 0;
                     hx = this.head[0];
                     hy = this.head[1];
@@ -26,7 +26,8 @@ class Ship {
                         console.log("No placeable position!");
                     } else {
                         this.rotation++;
-                        console.log("Rotating ship");
+                        console.log(`Rotating ${this.name}`);
+                        index = 0;
                     }
 
                 } else {
