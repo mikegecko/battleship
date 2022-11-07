@@ -21,31 +21,43 @@ body{
     background-color: rgb(85, 88, 89);
 }
 .game-area{
-    background-color: blue;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(25, 25, 160);
     width: 100%;
+    padding: 0 3rem 3rem 3rem;
 }
 .shot-container{
     display: grid;
-    grid-template-columns: repeat(10,1fr);
-    grid-template-rows: repeat(10,1fr);
-    column-gap: 4px;
-    row-gap: 4px;
+    grid-template-columns: repeat(10,3rem);
+    grid-template-rows: repeat(10,3rem);
+    column-gap: 2px;
+    row-gap: 2px;
+    text-align: center;
 }
 .ship-container{
     display: grid;
-    grid-template-columns: repeat(10,1fr);
-    grid-template-rows: repeat(10,1fr);
+    grid-template-columns: repeat(10,3rem);
+    grid-template-rows: repeat(10,3rem);
+    column-gap: 2px;
+    row-gap: 2px;
+    text-align: center;
 }
 .item{
+    box-sizing: border-box;
     text-align: center;
     padding: 1rem;
+    border: 2px solid rgb(208, 206, 206);
 }
 .item:hover{
-    background-color: rgb(53, 53, 231);
+    background-color: rgb(66, 199, 84);
 }
 .ship{
     background-color: rgb(74, 73, 69);
     text-align: center;
-    margin: .1rem;
     padding: 1rem;
+}
+h3{
+    color: rgb(208, 206, 206);
+    font-weight: bolder;
 }
