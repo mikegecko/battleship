@@ -29,6 +29,7 @@ class Gameboard {
         else{
             console.log('Creating new ship');
             options.head = genCoords();
+            console.log(options);
             this.placeShip(options);
             //We need to create a new ship
         }
@@ -42,7 +43,7 @@ class Gameboard {
                 for (let index = 0; index < ship.coord.length; index++) {
                     const xy = ship.coord[index];
                     if(element[0] == xy[0] && element[1] == xy[1]){
-                        console.log('Intersection detected');
+                        console.log(`Intersection detected at ${xy}`);
                         return(false);
                     }
                 }
@@ -98,7 +99,7 @@ class Gameboard {
 class DOMinterface {
     constructor(params) {
         this.shotArea = document.querySelector('.shot-container');
-        this.shipArea = document.querySelector(".ship-container")
+        this.shipArea = document.querySelector(".ship-container");
     }   
     renderShips(shipArr){
         for (let index = 0; index < shipArr.length; index++) {
@@ -111,10 +112,23 @@ class DOMinterface {
                 gridItem.textContent = mark;
                 gridItem.style.gridColumn = coor[0];
                 gridItem.style.gridRow = coor[1];
-                gridItem.classList.add('ship')
+                gridItem.classList.add('item');
+                gridItem.classList.add('ship');
                 this.shipArea.appendChild(gridItem);
             }
-            
+        }
+    }
+    createShipSquares(){
+        for (let irow = 0; irow < 10; irow++) {
+            for (let icolumn = 0; icolumn < 10; icolumn++) {
+                const square = document.createElement('div');
+                square.style.gridColumn = icolumn+1;
+                square.style.gridRow = irow+1;
+                //square.id = `${icolumn}-${irow}`;
+                square.classList.add('item');
+                //square.addEventListener("click",this.shotHandler);
+                this.shipArea.appendChild(square);
+            }
         }
     }
     shotHandler(callback){
@@ -150,6 +164,7 @@ function game() {
     const playerBoard = new Gameboard();
     const UI = new DOMinterface();
     UI.createShotSquares();
+    UI.createShipSquares();
     //Place ships TEMP
     const shipProto = createShips();
     // compBoard.placeShip(shipProto[0]);
@@ -167,6 +182,8 @@ function game() {
 }
 
 function createShips(){
+    //TODO: Fix bug where battleship generates with a length of 3
+    //TODO: Fix ships still intersecting sometimes
     let shiparr = [];
     const carrier = {name: "Carrier", length: 5, head: genCoords() };
     const battleship = {name: "Battleship", length: 4, head: genCoords()};
