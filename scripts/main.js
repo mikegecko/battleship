@@ -1,11 +1,21 @@
-// const {
-//     moduleExpression
-// } = require("@babel/types");
-// const Ship = require("./ship.js");
-// const Player = require("./player.js");
 import {Ship} from "./ship.js"
 import {Player} from "./player.js"
 import {Gameboard} from "./gameboard.js"
+
+/*
+    TODO:
+    - Implement displaying of hits and misses in DOM
+    - Implement game loop: taking turns, win/lose
+        - win/lose modal
+    - Create console for displaying if the move hit/miss/sunk
+    - Move DOMinterface into separate module
+    - Implement placement system of ships
+    - Add pictures/textures to ships
+
+    BUGS:
+    - Fix ships generating off grid
+    - Fix ships generating with one less length
+*/
 
 class DOMinterface {
     constructor(params) {
