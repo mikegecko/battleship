@@ -26,10 +26,10 @@ class Gameboard {
             options.head = genCoords();
             console.log(options);
             this.placeShip(options);
-            //We need to create a new ship
         }
     }
     shipPlacementValid(shipObj){
+        //TODO: Rewrite or add new method for checking edge cases
         const checkCoords = shipObj.coord;
         for (let j = 0; j < checkCoords.length; j++) {
             const element = checkCoords[j];

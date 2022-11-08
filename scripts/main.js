@@ -106,7 +106,7 @@ class DOMinterface {
 //Main Game Loop
     function game(){
     //TODO: Turn this into a module & add turn, ggameEnd method
-    //Initializing objects
+    //Initializing objects (Do not put into contructor)
     const compBoard = new Gameboard();
     const playerBoard = new Gameboard();
     const UI = new DOMinterface();
@@ -121,7 +121,7 @@ class DOMinterface {
     computerShips.forEach(element => {
         compBoard.placeShip(element);
     });
-    //Temp debug button
+    //Debug button
     const db = document.querySelector('#cheat');
     db.addEventListener('click', function (e){
         UI.debugHandler(compBoard.getShips());
