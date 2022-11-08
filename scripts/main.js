@@ -100,8 +100,9 @@ class DOMinterface {
     constructor(params) {
         this.shotArea = document.querySelector('.shot-container');
         this.shipArea = document.querySelector(".ship-container");
+        this.debugFlag = false;
     }   
-    renderShips(shipArr){
+    renderPlayerShips(shipArr){
         for (let index = 0; index < shipArr.length; index++) {
             const ship = shipArr[index];
             console.log(ship);
@@ -115,6 +116,23 @@ class DOMinterface {
                 gridItem.classList.add('item');
                 gridItem.classList.add('ship');
                 this.shipArea.appendChild(gridItem);
+            }
+        }
+    }
+    renderEnemyShips(shipArr){
+        for (let index = 0; index < shipArr.length; index++) {
+            const ship = shipArr[index];
+            //console.log(ship);
+            for (let index = 0; index < ship.coord.length; index++) {
+                const coor = ship.coord[index];
+                const gridItem = document.createElement('div');
+                const mark = ship.marker;
+                gridItem.textContent = mark;
+                gridItem.style.gridColumn = coor[0];
+                gridItem.style.gridRow = coor[1];
+                gridItem.classList.add('item');
+                gridItem.classList.add('ship');
+                this.shotArea.appendChild(gridItem);
             }
         }
     }
@@ -151,13 +169,31 @@ class DOMinterface {
     renderShots(playerObj){
 
     }
+    removeChildren(parentNode){
+        while(parentNode.firstChild){
+            parentNode.removeChild(parentNode.lastChild);
+        }
+    }
+    debugHandler(shipArr){
+        this.debugFlag = !this.debugFlag;
+        if(this.debugFlag == true){
+            console.log('Show');
+            this.renderEnemyShips(shipArr)
+        }
+        else{
+            this.removeChildren(this.shotArea);
+            this.createShotSquares();
+            console.log('Hide');
+            return;
+        }
+    }
     update(){
-
+        console.log('update');
     }
 }
 
 //Main Game Loop
-function game() {
+    function game(){
     //TODO: Turn this into a module & add turn, ggameEnd method
     //Initializing objects
     const compBoard = new Gameboard();
@@ -166,19 +202,25 @@ function game() {
     UI.createShotSquares();
     UI.createShipSquares();
     //Place ships TEMP
-    const shipProto = createShips();
-    // compBoard.placeShip(shipProto[0]);
-    // playerBoard.placeShip(shipProto[1]);
-    // playerBoard.placeShip(shipProto[2]);
-    shipProto.forEach(element => {
+    const playerShips = createShips();
+    playerShips.forEach(element => {
         playerBoard.placeShip(element);
     });
+    const computerShips = createShips();
+    computerShips.forEach(element => {
+        compBoard.placeShip(element);
+    });
+    //Temp debug button
+    const db = document.querySelector('#cheat');
+    db.addEventListener('click', function (e){
+        UI.debugHandler(compBoard.getShips());
+    });
+
     //Computer player
     const cp = new Player(playerBoard, compBoard, true);
     //Player
     const pl = new Player(playerBoard, compBoard, false);
-    UI.renderShips(playerBoard.getShips());
-    console.log('Ran successfully');
+    UI.renderPlayerShips(playerBoard.getShips());
 }
 
 function createShips(){
@@ -202,5 +244,4 @@ function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
 game();
-console.log('Fin');
 //module.exports = Gameboard;
