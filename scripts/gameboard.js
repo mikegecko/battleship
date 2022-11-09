@@ -14,7 +14,7 @@ class Gameboard {
         if (options == null) {
             options = {
                 name: "placeholder",
-                length: 2,
+                length: 1,
                 head: [1, 3],
                 rot: 1,
             };
@@ -40,13 +40,23 @@ class Gameboard {
                 for (let index = 0; index < ship.coord.length; index++) {
                     const xy = ship.coord[index];
                     if (element[0] == xy[0] && element[1] == xy[1]) {
-                        console.log(`Intersection detected at ${xy}`);
+                        console.log(`${shipObj.name} intersecting at ${xy}`);
                         return false;
                     }
                 }
             }
         }
         return true;
+    }
+    checkShipData(){
+        this.ships.forEach(ship => {
+            if(ship.length == ship.coord.length){
+                return;
+            }
+            else{
+                console.log(`Length error for ${ship.name}`);
+            }
+        });
     }
     checkValidMove(x,y){
         //Checks if the move has already been made before

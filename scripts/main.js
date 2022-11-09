@@ -197,7 +197,12 @@ class DOMinterface {
     db.addEventListener('click', function (e){
         UI.debugHandler(compBoard.getShips());
     });
-   
+    //Check ship data
+    console.log('Checking computer ships...');
+    compBoard.checkShipData();
+    console.log('Checking player ships...');
+    playerBoard.checkShipData();
+
     UI.renderPlayerShips(playerBoard.getShips());
 
     //Player turn start
