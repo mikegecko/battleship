@@ -4,11 +4,14 @@ import {Gameboard} from "./gameboard.js"
 
 
 /*
-    TODO:
-    - Implement displaying of hits and misses in DOM
-    - Implement game loop: taking turns, win/lose
+    TODO:✅❌
+    - Implement displaying of hits and misses in DOM [1/2]
+        - hits/misses in enemy board ✅
+        - hits/misses in player board ❌
+    - Implement game loop:
+        - taking turns
         - win/lose modal
-    - Create console for displaying if the move hit/miss/sunk
+    - Create console div for displaying if the move hit/miss/sunk
     - Move DOMinterface into separate module
     - Implement placement system of ships
     - Add pictures/textures to ships
@@ -16,7 +19,7 @@ import {Gameboard} from "./gameboard.js"
     BUGS:
     - Fix ships generating off grid
     - Fix ships generating with one less length
-    - Fix player ability to attack same space
+    - Fix player ability to attack same space ✅
 */
 
 class DOMinterface {
@@ -46,7 +49,6 @@ class DOMinterface {
     renderEnemyShips(shipArr){
         for (let index = 0; index < shipArr.length; index++) {
             const ship = shipArr[index];
-            //console.log(ship);
             for (let index = 0; index < ship.coord.length; index++) {
                 const coor = ship.coord[index];
                 const gridItem = document.createElement('div');
@@ -75,7 +77,6 @@ class DOMinterface {
     }
     
     createShotSquares(){
-
         for (let irow = 0; irow < 10; irow++) {
             for (let icolumn = 0; icolumn < 10; icolumn++) {
                 const square = document.createElement('div');
@@ -86,24 +87,50 @@ class DOMinterface {
                 square.addEventListener("click", (event) => {
                     this.shotHandler(event);
                 });
+                square.addEventListener('mouseover', (event) => {
+                    this.mouseHoverHandler(event);
+                });
                 this.shotArea.appendChild(square);
+                square.addEventListener('mouseout', (event) => {
+                    this.mouseLeaveHandler(event);
+                });
             }
         }
+    }
+    mouseHoverHandler(event){
+        const element = event.target;
+        const arr = [...element.id];
+        const x = parseInt(arr[0]) + 1;
+        const y = parseInt(arr[2]) + 1;
+        if(compBoard.checkValidMove(x, y)){
+            //Valid move
+            element.classList.add('valid');
+        }
+        else{
+            //invalid move
+            element.classList.add('invalid');
+        }
+    }
+    mouseLeaveHandler(event){
+        const element = event.target;
+        element.classList.remove('valid');
+        element.classList.remove('invalid');
     }
     shotHandler(event){
         const coord = [...event.target.id];
         const x = parseInt(coord[0]) + 1;
         const y = parseInt(coord[2]) + 1;
         console.log(x, y);
-        console.log(pl.play(x,y));
+        if(compBoard.checkValidMove(x, y)){
+            console.log(pl.play(x,y));
+        }
         //Temp for displaying hits/misses
         this.renderShots(compBoard);
+        //TODO: After this is executed end players turn and let computer move
     }
     renderShots(playerObj){
-        console.log('rendering shots');
         const hits = playerObj.hits;
         const misses = playerObj.misses;
-        console.log(misses);
         for (let index = 0; index < misses.length; index++) {
             let coord = misses[index];
             let element = document.getElementById(`${coord[0]-1}-${coord[1]-1}`);
@@ -115,9 +142,7 @@ class DOMinterface {
             let element = document.getElementById(`${coord[0]-1}-${coord[1]-1}`);
             element.classList.add('hit');
             element.textContent = 'X'
-            
         }
-
     }
     removeChildren(parentNode){
         while(parentNode.firstChild){
@@ -153,7 +178,7 @@ class DOMinterface {
      const pl = new Player(playerBoard, compBoard, false);
 //Main Game Loop
     function game(){
-    //TODO: Turn this into a module & add turn, ggameEnd method
+    //TODO: Turn this into a module & add turn, gameEnd method
     //Initializing objects (Do not put into contructor)
     const UI = new DOMinterface();
     UI.createShotSquares();
@@ -172,7 +197,6 @@ class DOMinterface {
     db.addEventListener('click', function (e){
         UI.debugHandler(compBoard.getShips());
     });
-
    
     UI.renderPlayerShips(playerBoard.getShips());
 
