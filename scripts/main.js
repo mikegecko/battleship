@@ -2,6 +2,7 @@ import {Ship} from "./ship.js"
 import {Player} from "./player.js"
 import {Gameboard} from "./gameboard.js"
 
+
 /*
     TODO:
     - Implement displaying of hits and misses in DOM
@@ -15,6 +16,7 @@ import {Gameboard} from "./gameboard.js"
     BUGS:
     - Fix ships generating off grid
     - Fix ships generating with one less length
+    - Fix player ability to attack same space
 */
 
 class DOMinterface {
@@ -81,7 +83,9 @@ class DOMinterface {
                 square.style.gridRow = irow+1;
                 square.id = `${icolumn}-${irow}`;
                 square.classList.add('item');
-                square.addEventListener("click",this.shotHandler);
+                square.addEventListener("click", (event) => {
+                    this.shotHandler(event);
+                });
                 this.shotArea.appendChild(square);
             }
         }
@@ -92,11 +96,27 @@ class DOMinterface {
         const y = parseInt(coord[2]) + 1;
         console.log(x, y);
         console.log(pl.play(x,y));
+        //Temp for displaying hits/misses
+        this.renderShots(compBoard);
     }
     renderShots(playerObj){
+        console.log('rendering shots');
         const hits = playerObj.hits;
         const misses = playerObj.misses;
-
+        console.log(misses);
+        for (let index = 0; index < misses.length; index++) {
+            let coord = misses[index];
+            let element = document.getElementById(`${coord[0]-1}-${coord[1]-1}`);
+            element.classList.add('miss');
+            element.textContent = '⋅';
+        }
+        for (let index = 0; index < hits.length; index++) {
+            let coord = hits[index];
+            let element = document.getElementById(`${coord[0]-1}-${coord[1]-1}`);
+            element.classList.add('hit');
+            element.textContent = 'X'
+            
+        }
 
     }
     removeChildren(parentNode){
@@ -111,14 +131,17 @@ class DOMinterface {
             this.renderEnemyShips(shipArr)
         }
         else{
-            this.removeChildren(this.shotArea);
-            this.createShotSquares();
+            this.update();
             console.log('Hide');
             return;
         }
     }
     update(){
         console.log('update');
+        //Rendering enemy waters
+        this.removeChildren(this.shotArea);
+        this.createShotSquares();
+        this.renderShots(compBoard);
     }
 }
 // I Dont like these here
