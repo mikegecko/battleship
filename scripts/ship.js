@@ -78,6 +78,7 @@ class Ship {
     isSunk() {
         if (this.hits == this.length || this.hits > this.length) {
             this.sunk = true;
+            console.log(`${this.name} was sunk!`);
         } else {
             this.sunk = false;
         }
