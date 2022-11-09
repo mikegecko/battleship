@@ -1,7 +1,10 @@
-import {Ship} from "./ship.js"
-import {genCoords} from "./main.js"
+import {
+    Ship
+} from "./ship.js";
+import {
+    genCoords
+} from "./main.js";
 class Gameboard {
-    
     constructor() {
         this.misses = [];
         this.hits = [];
@@ -12,23 +15,22 @@ class Gameboard {
             options = {
                 name: "placeholder",
                 length: 2,
-                head: [1,3],
+                head: [1, 3],
                 rot: 1,
             };
         }
         const ship = new Ship(options);
-        if(this.shipPlacementValid(ship)){
+        if (this.shipPlacementValid(ship)) {
             this.ships.push(ship);
             return ship;
-        }
-        else{
-            console.log('Creating new ship');
+        } else {
+            console.log("Creating new ship");
             options.head = genCoords();
             console.log(options);
             this.placeShip(options);
         }
     }
-    shipPlacementValid(shipObj){
+    shipPlacementValid(shipObj) {
         //TODO: Rewrite or add new method for checking edge cases
         const checkCoords = shipObj.coord;
         for (let j = 0; j < checkCoords.length; j++) {
@@ -37,35 +39,29 @@ class Gameboard {
                 const ship = this.ships[index];
                 for (let index = 0; index < ship.coord.length; index++) {
                     const xy = ship.coord[index];
-                    if(element[0] == xy[0] && element[1] == xy[1]){
+                    if (element[0] == xy[0] && element[1] == xy[1]) {
                         console.log(`Intersection detected at ${xy}`);
-                        return(false);
+                        return false;
                     }
                 }
             }
         }
-        return(true);
+        return true;
     }
     receiveAttack(x, y) {
         //determines whether or not the attack hit a ship and then sends the ‘hit’ function to the correct ship, or records the coordinates of the missed shot
         for (let index = 0; index < this.ships.length; index++) {
-            const element = this.ships[index];
-            if (element.coord[0] == x) {
-                if (element.coord[1] == y) {
-                    this.hits.push([x, y]);
-                    element.hit();
-                    return "hit";
-                } else {
-                    this.misses.push([x, y]);
-                    return "miss";
+            let ship = this.ships[index];
+            for (let j = 0; j < ship.coord.length; j++) {
+                if (ship.coord[j][0] == x) {
+                    if (ship.coord[j][1] == y) {
+                        this.hits.push([x, y]);
+                        ship.hit();
+                        return "hit";
+                    }
                 }
-            } else {
-                this.misses.push([x, y]);
-                return "miss";
             }
         }
-        //No ships placed
-        console.log("No ships placed");
         this.misses.push([x, y]);
         return "miss";
     }
@@ -86,8 +82,10 @@ class Gameboard {
             return true;
         }
     }
-    getShips(){
-        return(this.ships);
+    getShips() {
+        return this.ships;
     }
 }
-export { Gameboard };
+export {
+    Gameboard
+};
