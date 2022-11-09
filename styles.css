@@ -54,6 +54,12 @@ body{
     padding: 1rem;
     border: 2px solid rgb(208, 206, 206);
 }
+.miss{
+    background-color: aqua;
+}
+.hit{
+    background-color: rgb(168, 28, 28);
+}
 .item:hover{
     background-color: rgb(66, 199, 84);
 }
