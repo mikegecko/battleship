@@ -18,11 +18,12 @@ import {Gameboard} from "./gameboard.js"
 */
 
 class DOMinterface {
-    constructor(params) {
+    constructor() {
         this.shotArea = document.querySelector('.shot-container');
         this.shipArea = document.querySelector(".ship-container");
         this.debugFlag = false;
     }   
+    //Refactor into one renderShips() method
     renderPlayerShips(shipArr){
         for (let index = 0; index < shipArr.length; index++) {
             const ship = shipArr[index];
@@ -70,9 +71,7 @@ class DOMinterface {
             }
         }
     }
-    shotHandler(callback){
-        console.log(callback.target.id);
-    }
+    
     createShotSquares(){
 
         for (let irow = 0; irow < 10; irow++) {
@@ -87,7 +86,17 @@ class DOMinterface {
             }
         }
     }
+    shotHandler(event){
+        const coord = [...event.target.id];
+        const x = parseInt(coord[0]) + 1;
+        const y = parseInt(coord[2]) + 1;
+        console.log(x, y);
+        console.log(pl.play(x,y));
+    }
     renderShots(playerObj){
+        const hits = playerObj.hits;
+        const misses = playerObj.misses;
+
 
     }
     removeChildren(parentNode){
@@ -112,13 +121,17 @@ class DOMinterface {
         console.log('update');
     }
 }
-
+// I Dont like these here
+    const compBoard = new Gameboard();
+    const playerBoard = new Gameboard();
+     //Computer player
+     const cp = new Player(playerBoard, compBoard, true);
+     //Player
+     const pl = new Player(playerBoard, compBoard, false);
 //Main Game Loop
     function game(){
     //TODO: Turn this into a module & add turn, ggameEnd method
     //Initializing objects (Do not put into contructor)
-    const compBoard = new Gameboard();
-    const playerBoard = new Gameboard();
     const UI = new DOMinterface();
     UI.createShotSquares();
     UI.createShipSquares();
@@ -137,11 +150,10 @@ class DOMinterface {
         UI.debugHandler(compBoard.getShips());
     });
 
-    //Computer player
-    const cp = new Player(playerBoard, compBoard, true);
-    //Player
-    const pl = new Player(playerBoard, compBoard, false);
+   
     UI.renderPlayerShips(playerBoard.getShips());
+
+    //Player turn start
 }
 
 function createShips(){
