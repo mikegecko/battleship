@@ -5,11 +5,11 @@ import {Gameboard} from "./gameboard.js"
 
 /*
     TODO:✅❌
-    - Implement displaying of hits and misses in DOM [1/2]
-        - hits/misses in enemy board ✅
-        - hits/misses in player board ❌
+    - Implement displaying of hits and misses in DOM [2/2] 
+        ✅ hits/misses in enemy board 
+        ✅ hits/misses in player board 
     - Implement game loop:
-        - taking turns
+        ❌ taking turns
         - win/lose modal
     - Create console div for displaying if the move hit/miss/sunk
     - Move DOMinterface into separate module
@@ -17,9 +17,10 @@ import {Gameboard} from "./gameboard.js"
     - Add pictures/textures to ships
 
     BUGS:
-    - Fix ships generating off grid
-    - Fix ships generating with one less length
-    - Fix player ability to attack same space ✅
+    ❌ Fix ships generating off grid
+    ❌ Fix ships generating with incorrect length
+    ✅ Fix player ability to attack same space 
+    ❌ Fix player ships overlapping the hit markers
 */
 
 class DOMinterface {
@@ -68,7 +69,7 @@ class DOMinterface {
                 const square = document.createElement('div');
                 square.style.gridColumn = icolumn+1;
                 square.style.gridRow = irow+1;
-                //square.id = `${icolumn}-${irow}`;
+                square.id = `P${icolumn}-${irow}`;
                 square.classList.add('item');
                 //square.addEventListener("click",this.shotHandler);
                 this.shipArea.appendChild(square);
@@ -122,26 +123,46 @@ class DOMinterface {
         const y = parseInt(coord[2]) + 1;
         console.log(x, y);
         if(compBoard.checkValidMove(x, y)){
-            console.log(pl.play(x,y));
+            console.log('Player: '+ pl.play(x,y));
+            console.log('Computer: ' + cp.play(...cp.aiPlay()));
+        }
+        else{
+            console.log('Duplicate move');
         }
         //Temp for displaying hits/misses
         this.renderShots(compBoard);
-        //TODO: After this is executed end players turn and let computer move
+        this.renderShots(playerBoard);
     }
     renderShots(playerObj){
         const hits = playerObj.hits;
         const misses = playerObj.misses;
         for (let index = 0; index < misses.length; index++) {
             let coord = misses[index];
-            let element = document.getElementById(`${coord[0]-1}-${coord[1]-1}`);
-            element.classList.add('miss');
-            element.textContent = '⋅';
+            if(playerObj == playerBoard){
+                let element = document.getElementById(`P${coord[0]-1}-${coord[1]-1}`);
+                element.classList.add('miss');
+                element.textContent = '⋅';
+            }
+            else{
+                let element = document.getElementById(`${coord[0]-1}-${coord[1]-1}`);
+                element.classList.add('miss');
+                element.textContent = '⋅';
+            }            
         }
         for (let index = 0; index < hits.length; index++) {
             let coord = hits[index];
-            let element = document.getElementById(`${coord[0]-1}-${coord[1]-1}`);
-            element.classList.add('hit');
-            element.textContent = 'X'
+            if(playerObj == playerBoard){
+                let element = document.getElementById(`P${coord[0]-1}-${coord[1]-1}`);
+                element.classList.remove('.ship');
+                element.classList.add('hit');
+                element.textContent = 'X'
+            }
+            else{
+                let element = document.getElementById(`${coord[0]-1}-${coord[1]-1}`);
+                element.classList.add('hit');
+                element.textContent = 'X'
+            }
+            
         }
     }
     removeChildren(parentNode){
@@ -153,7 +174,8 @@ class DOMinterface {
         this.debugFlag = !this.debugFlag;
         if(this.debugFlag == true){
             console.log('Show');
-            this.renderEnemyShips(shipArr)
+            this.renderEnemyShips(shipArr);
+            this.renderPlayerShips(playerBoard.getShips());
         }
         else{
             this.update();
@@ -167,6 +189,10 @@ class DOMinterface {
         this.removeChildren(this.shotArea);
         this.createShotSquares();
         this.renderShots(compBoard);
+        //Rendering player waters
+        this.removeChildren(this.shipArea);
+        this.createShipSquares();
+        this.renderShots(playerBoard);
     }
 }
 // I Dont like these here
