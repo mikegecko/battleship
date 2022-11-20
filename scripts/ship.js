@@ -32,26 +32,33 @@ class Ship {
 
                 } else {
                     //This extends the ship according to length
+                    //!!!!!!!!!!!!!!!!!!!!!!!!!!
+                    // I think something is going wrong here
                     //Up
                     if (this.rotation == 3) {
                         coordArr.push([hx, hy--]);
                     }
                     //Down
-                    if (this.rotation == 1) {
+                    else if (this.rotation == 1) {
                         coordArr.push([hx, hy++]);
                     }
                     //Left
-                    if (this.rotation == 2) {
+                    else if (this.rotation == 2) {
                         coordArr.push([hx--, hy]);
                     }
                     //Right
-                    if (this.rotation == 4) {
+                    else if (this.rotation == 4) {
                         coordArr.push([hx++, hy]);
                     }
                 }
             }
             this.coord = coordArr;
-            return (coordArr);
+            if(this.coord.length == this.length){
+                return (coordArr);
+            }
+            else{
+                console.log(`Length error for ${this.name}`);
+            }
         }
         this.automaticShipPosition();
     }

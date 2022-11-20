@@ -49,14 +49,14 @@ class Gameboard {
         return true;
     }
     checkShipData(){
-        this.ships.forEach(ship => {
-            if(ship.length == ship.coord.length){
-                return;
-            }
-            else{
-                console.log(`Length error for ${ship.name}`);
-            }
-        });
+        // this.ships.forEach(ship => {
+        //     if(ship.length == ship.coord.length){
+        //         return;
+        //     }
+        //     else{
+        //         console.log(`Length error for ${ship.name}`);
+        //     }
+        // });
     }
     checkValidMove(x,y){
         //Checks if the move has already been made before
