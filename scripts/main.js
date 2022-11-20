@@ -20,7 +20,7 @@ import {Gameboard} from "./gameboard.js"
     ❌ Fix ships generating off grid
     ❌ Fix ships generating with incorrect length
     ✅ Fix player ability to attack same space 
-    ❌ Fix player ships overlapping the hit markers
+    ✅ Fix player ships overlapping the hit markers
 */
 
 class DOMinterface {
