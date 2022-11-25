@@ -10,17 +10,11 @@ import {
 
 /*
     TODO:✅❌
-    - Implement displaying of hits and misses in DOM [2/2] 
-        ✅ hits/misses in enemy board 
-        ✅ hits/misses in player board 
-    ✅ Refactor game function into Class
-    - Implement game loop:
-        ✅ start game modal
-        ✅ taking turns
-        ✅ win/lose modal
+
     ❌ Create console div for displaying if the move hit/miss/sunk
     ❌ Move DOMinterface into separate module
     ❌ Implement placement system for ships
+    ❌ Refactor newGame() function into game class
     
     EXTRA:
     - Implement Salvo game mode
@@ -29,10 +23,7 @@ import {
     - Add pictures/textures to ships
 
     BUGS:
-    ✅ Fix ships generating off grid
-    ✅ Fix ships generating with incorrect length
-    ✅ Fix player ability to attack same space 
-    ✅ Fix player ships overlapping the hit markers
+
 */
 
 class DOMinterface {
