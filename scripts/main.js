@@ -22,8 +22,12 @@ import {
     - Create console div for displaying if the move hit/miss/sunk
     - Move DOMinterface into separate module
     - Implement placement system for ships
-    - Add pictures/textures to ships
+    
+    EXTRA:
+    - Implement Salvo game mode
+    - Implement Fleet health bar
     - Implement smart AI to improve attacks
+    - Add pictures/textures to ships
 
     BUGS:
     ✅ Fix ships generating off grid
@@ -40,8 +44,8 @@ class DOMinterface {
     }
     //Refactor into one renderShips() method
     renderPlayerShips(shipArr) {
-        console.log('Player Ships');
-        console.log(shipArr);
+        // console.log('Player Ships');
+        // console.log(shipArr);
         for (let index = 0; index < shipArr.length; index++) {
             const ship = shipArr[index];
             for (let index = 0; index < ship.coord.length; index++) {
@@ -58,8 +62,8 @@ class DOMinterface {
         }
     }
     renderEnemyShips(shipArr) {
-        console.log('Computer Ships');
-        console.log(shipArr);
+        // console.log('Computer Ships');
+        // console.log(shipArr);
         for (let index = 0; index < shipArr.length; index++) {
             const ship = shipArr[index];
             for (let index = 0; index < ship.coord.length; index++) {
@@ -134,17 +138,7 @@ class DOMinterface {
         element.classList.remove('invalidmiss');
     }
     shotHandler(event) {
-        const coord = [...event.target.id];
-        const x = parseInt(coord[0]) + 1;
-        const y = parseInt(coord[2]) + 1;
-        console.log(x, y);
-        const result = compBoard.checkValidMove(x, y);
-        if (result[0]) {
-            console.log('Player: ' + pl.play(x, y));
-            console.log('Computer: ' + cp.play(...cp.aiPlay()));
-        } else {
-            console.log('Duplicate move');
-        }
+        g.turn(event);
         //Temp for displaying hits/misses
         this.renderShots(compBoard);
         this.renderShots(playerBoard);
@@ -239,14 +233,21 @@ class Game {
     db.addEventListener('click', function (e) {
         UI.debugHandler(compBoard.getShips());
     });
-    
-
     UI.renderPlayerShips(playerBoard.getShips());
-
-    //Player turn start
     }
-    turn(){
 
+    turn(event){
+        const coord = [...event.target.id];
+        const x = parseInt(coord[0]) + 1;
+        const y = parseInt(coord[2]) + 1;
+        console.log(x, y);
+        const result = compBoard.checkValidMove(x, y);
+        if (result[0]) {
+            console.log('Player: ' + pl.play(x, y));
+            console.log('Computer: ' + cp.play(...cp.aiPlay()));
+        } else {
+            console.log('Duplicate move');
+        }
     }
     gameEnd(){
 

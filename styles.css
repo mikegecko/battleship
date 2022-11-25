@@ -32,7 +32,7 @@ body{
     background-color: #363636;
     align-items: center;
     width: 100%;
-    padding: 1rem;
+    padding-bottom: 3rem;
 }
 .shot-container{
     display: grid;

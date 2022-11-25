@@ -24,7 +24,7 @@ class Ship {
                         console.log("No placeable position!");
                     } else {
                         this.rotation++;
-                        console.log(`Rotating ${this.name}`);
+                        // console.log(`Rotating ${this.name}`);
                     }
 
                 } else {
