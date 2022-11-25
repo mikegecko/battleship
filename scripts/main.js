@@ -191,7 +191,7 @@ class DOMinterface {
         }
     }
     update() {
-        console.log('update');
+        //console.log('update');
         //Rendering enemy waters
         this.removeChildren(this.shotArea);
         this.createShotSquares();
@@ -248,7 +248,7 @@ class DOMinterface {
         });
     }
     modalListener(event) {
-        console.log(event);
+        //console.log(event);
         if(event.target.innerText == 'Start Game'){
             this.hideModals();
             g.startGame(event);
@@ -310,14 +310,16 @@ class Game {
         const coord = [...event.target.id];
         const x = parseInt(coord[0]) + 1;
         const y = parseInt(coord[2]) + 1;
-        console.log(x, y);
+        //console.log(x, y);
         const result = compBoard.checkValidMove(x, y);
         if (result[0]) {
-            console.log('Player: ' + pl.play(x, y));
-            console.log('Computer: ' + cp.play(...cp.aiPlay()));
+            //console.log('Player: ' + pl.play(x, y));
+            pl.play(x, y);
+            //console.log('Computer: ' + cp.play(...cp.aiPlay()));
+            cp.play(...cp.aiPlay());
             this.checkWin();
         } else {
-            console.log('Duplicate move');
+            //console.log('Duplicate move');
         }
     }
     //This runs before game start

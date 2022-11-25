@@ -24,7 +24,7 @@ class Gameboard {
             this.ships.push(ship);
             return ship;
         } else {
-            console.log("Creating new ship");
+            //console.log("Creating new ship");
             options.head = genCoords();
             // console.log(options);
             this.placeShip(options);
@@ -40,7 +40,7 @@ class Gameboard {
                 for (let index = 0; index < ship.coord.length; index++) {
                     const xy = ship.coord[index];
                     if (element[0] == xy[0] && element[1] == xy[1]) {
-                        console.log(`${shipObj.name} intersecting at ${xy}`);
+                        //console.log(`${shipObj.name} intersecting at ${xy}`);
                         return false;
                     }
                 }
