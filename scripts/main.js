@@ -13,7 +13,7 @@ import {Gameboard} from "./gameboard.js"
         - win/lose modal
     - Create console div for displaying if the move hit/miss/sunk
     - Move DOMinterface into separate module
-    - Implement placement system of ships
+    - Implement placement system for ships
     - Add pictures/textures to ships
 
     BUGS:
@@ -141,12 +141,12 @@ class DOMinterface {
             if(playerObj == playerBoard){
                 let element = document.getElementById(`P${coord[0]-1}-${coord[1]-1}`);
                 element.classList.add('miss');
-                element.textContent = '⋅';
+                element.textContent = '';
             }
             else{
                 let element = document.getElementById(`${coord[0]-1}-${coord[1]-1}`);
                 element.classList.add('miss');
-                element.textContent = '⋅';
+                element.textContent = '';
             }            
         }
         for (let index = 0; index < hits.length; index++) {
