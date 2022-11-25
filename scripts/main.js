@@ -103,26 +103,33 @@ class DOMinterface {
         const arr = [...element.id];
         const x = parseInt(arr[0]) + 1;
         const y = parseInt(arr[2]) + 1;
-        if(compBoard.checkValidMove(x, y)){
+        const result = compBoard.checkValidMove(x, y);
+        if(result[0]){
             //Valid move
             element.classList.add('valid');
         }
-        else{
-            //invalid move
+        else if(!result[0] && result[1] == 2){
+            //invalid move (hit)
             element.classList.add('invalid');
+        }
+        else if(!result[0] && result[1] == 1){
+            //invalid move (miss)
+            element.classList.add('invalidmiss');
         }
     }
     mouseLeaveHandler(event){
         const element = event.target;
         element.classList.remove('valid');
         element.classList.remove('invalid');
+        element.classList.remove('invalidmiss');
     }
     shotHandler(event){
         const coord = [...event.target.id];
         const x = parseInt(coord[0]) + 1;
         const y = parseInt(coord[2]) + 1;
         console.log(x, y);
-        if(compBoard.checkValidMove(x, y)){
+        const result = compBoard.checkValidMove(x, y);
+        if(result[0]){
             console.log('Player: '+ pl.play(x,y));
             console.log('Computer: ' + cp.play(...cp.aiPlay()));
         }
@@ -132,6 +139,7 @@ class DOMinterface {
         //Temp for displaying hits/misses
         this.renderShots(compBoard);
         this.renderShots(playerBoard);
+        this.mouseHoverHandler(event);
     }
     renderShots(playerObj){
         const hits = playerObj.hits;
