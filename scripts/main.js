@@ -15,7 +15,7 @@ import {
     ❌ Move DOMinterface into separate module
     ❌ Implement placement system for ships
     ❌ Refactor newGame() function into game class
-    
+    g
     EXTRA:
     - Implement Salvo game mode
     - Implement Fleet health bar
