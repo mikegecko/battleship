@@ -8,7 +8,6 @@ import {
     Gameboard
 } from "./gameboard.js"
 
-
 /*
     TODO:✅❌
     - Implement displaying of hits and misses in DOM [2/2] 
@@ -202,16 +201,83 @@ class DOMinterface {
         this.createShipSquares();
         this.renderShots(playerBoard);
     }
-    attachModalListener() {
-        const startBtn = document.querySelector('#start');
-        startBtn.addEventListener('click', (event) => {
-            this.hideStartModal();
-            g.startGame(event);
-        })
+    createModals() {
+        const modalOptions = {
+            win: {
+                header: 'You Won!',
+                text: 'All enemy ships have been destroyed!',
+                id: 'wmodal',
+                btn: 'Restart'
+            },
+            lose: {
+                header: 'You Lost!',
+                text: 'Your fleet has been destroyed!',
+                id: 'lmodal',
+                btn: 'Restart'
+            },
+            start: {
+                header: 'Battleship',
+                text: 'Sink all the enemy ships to win!',
+                id: 'smodal',
+                btn: 'Start Game'
+            }
+        }
+        Object.values(modalOptions).forEach(element => {
+            const modal = document.createElement('div');
+            const modalBox = document.createElement('div');
+            const modalHeader = document.createElement('h3');
+            const modalText = document.createElement('p');
+            const modalBtn = document.createElement('button');
+            modal.classList.add('modal');
+            modal.classList.add('hidden');
+            modal.id = element.id;
+            modalBox.classList.add('modal-content');
+            modalBtn.classList.add('btn');
+            modalBtn.id = 'start';
+            modalBtn.addEventListener('click', (event) => {
+                this.modalListener(event);
+            });
+            modalHeader.textContent = element.header;
+            modalText.textContent = element.text;
+            modalBtn.textContent = element.btn;
+            modal.appendChild(modalBox);
+            modalBox.appendChild(modalHeader);
+            modalBox.appendChild(modalText);
+            modalBox.appendChild(modalBtn);
+            document.body.appendChild(modal);
+        });
     }
-    hideStartModal() {
-        const startModal = document.querySelector('.startmodal');
-        startModal.style.display = 'none';
+    modalListener(event) {
+        console.log(event);
+        if(event.target.innerText == 'Start Game'){
+            this.hideModals();
+            g.startGame(event);
+        }
+        else{
+            this.hideModals();
+            newGame();
+        }
+    }
+    hideModals() {
+        let modalArr = {};
+        const startModal = document.querySelector('#smodal');
+        const winModal = document.querySelector('#wmodal');
+        const lossModal = document.querySelector('#lmodal');
+        startModal.classList.add('hidden');
+        winModal.classList.add('hidden');
+        lossModal.classList.add('hidden');
+    }
+    showWin() {
+        const modal = document.querySelector('#wmodal');
+        modal.classList.remove('hidden');
+    }
+    showLoss() {
+        const modal = document.querySelector('#lmodal');
+        modal.classList.remove('hidden');
+    }
+    showStart() {
+        const modal = document.querySelector('#smodal');
+        modal.classList.remove('hidden');
     }
 }
 
@@ -256,15 +322,17 @@ class Game {
     }
     //This runs before game start
     init() {
-        UI.attachModalListener();
+        UI.createModals();
+        UI.showStart();
+        UI.update();
     }
     checkWin() {
         //Check win/lose and display modal
         if (playerBoard.fleetStatus() && !compBoard.fleetStatus()) {
-            //display win
+            UI.showWin();
             console.log('YOU WIN!');
         } else if (!playerBoard.fleetStatus() && compBoard.fleetStatus()) {
-            //display loss
+            UI.showLoss();
             console.log('YOU LOSE!');
         }
     }
@@ -313,14 +381,26 @@ function genCoords() {
 function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+function newGame() {
+    compBoard = new Gameboard();
+    playerBoard = new Gameboard();
+    //Computer player
+    cp = new Player(playerBoard, compBoard, true);
+    //Player
+    pl = new Player(playerBoard, compBoard, false);
+    UI = new DOMinterface();
+    g = new Game();
+    g.init();
+}
 //Global scope
-const compBoard = new Gameboard();
-const playerBoard = new Gameboard();
+let compBoard = new Gameboard();
+let playerBoard = new Gameboard();
 //Computer player
-const cp = new Player(playerBoard, compBoard, true);
+let cp = new Player(playerBoard, compBoard, true);
 //Player
-const pl = new Player(playerBoard, compBoard, false);
-const UI = new DOMinterface();
+let pl = new Player(playerBoard, compBoard, false);
+let UI = new DOMinterface();
 let g = new Game();
 g.init();
 export {

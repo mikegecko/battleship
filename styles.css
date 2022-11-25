@@ -32,7 +32,9 @@ body{
     background-color: #363636;
     align-items: center;
     width: 100%;
+    gap: 12px;
     padding-bottom: 3rem;
+    padding-top: 12px;
 }
 .shot-container{
     display: grid;
@@ -77,9 +79,6 @@ body{
     transition: .1s;
     background-color: rgb(216, 255, 255);
 }
-.item:hover{
-    /* background-color: rgb(66, 199, 84); */
-}
 .ship-container .item:hover{
     transition: .1s;
     background-color:  rgb(100, 100, 222);
@@ -95,10 +94,12 @@ h3{
     font-family: 'Black Ops One', sans-serif;
     color: rgb(194, 194, 194);
     font-weight: bolder;
+    text-shadow: 3px 3px 6px #1b1a1a;
 }
-.startmodal{
+.modal{
+    display: block;
     position: fixed;
-    z-index: 1;
+    z-index: 3;
     left: 0;
     top: 0;
     width: 100%;
@@ -131,4 +132,7 @@ h3{
 .modal-content>.btn:hover{
     transition: .2s;
     background-color: rgb(194, 194, 194);
+}
+.hidden{
+    display: none;
 }
