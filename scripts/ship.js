@@ -10,16 +10,13 @@ class Ship {
         this.marker = options.marker || this.name.charAt(0);
         this.automaticShipPosition = function () {
             // Checks for the first valid rotation of the ship
-            //TODO: Move coord checking to gameboard object
-            //      but keep coord generation here?
-            //TODO: Fix objects missing coordinate data sometimes
             //  down:1 left:2 up:3 right:4
             let coordArr = [];
             let hx = this.head[0];
             let hy = this.head[1];
             for (let index = 0; index < this.length; index++) {
                 if (hx > 10 || hy > 10 || hx <= 0 || hy <= 0) {
-                    index = 0;
+                    index = -1;
                     hx = this.head[0];
                     hy = this.head[1];
                     coordArr = [];
@@ -31,9 +28,6 @@ class Ship {
                     }
 
                 } else {
-                    //This extends the ship according to length
-                    //!!!!!!!!!!!!!!!!!!!!!!!!!!
-                    // I think something is going wrong here
                     //Up
                     if (this.rotation == 3) {
                         coordArr.push([hx, hy--]);

@@ -17,8 +17,8 @@ import {Gameboard} from "./gameboard.js"
     - Add pictures/textures to ships
 
     BUGS:
-    ❌ Fix ships generating off grid
-    ❌ Fix ships generating with incorrect length
+    ✅ Fix ships generating off grid
+    ✅ Fix ships generating with incorrect length
     ✅ Fix player ability to attack same space 
     ✅ Fix player ships overlapping the hit markers
 */
@@ -31,9 +31,10 @@ class DOMinterface {
     }   
     //Refactor into one renderShips() method
     renderPlayerShips(shipArr){
+        console.log('Player Ships');
+        console.log(shipArr);
         for (let index = 0; index < shipArr.length; index++) {
             const ship = shipArr[index];
-            console.log(ship);
             for (let index = 0; index < ship.coord.length; index++) {
                 const coor = ship.coord[index];
                 const gridItem = document.createElement('div');
@@ -48,6 +49,8 @@ class DOMinterface {
         }
     }
     renderEnemyShips(shipArr){
+        console.log('Computer Ships');
+        console.log(shipArr);
         for (let index = 0; index < shipArr.length; index++) {
             const ship = shipArr[index];
             for (let index = 0; index < ship.coord.length; index++) {
@@ -232,10 +235,10 @@ class DOMinterface {
         UI.debugHandler(compBoard.getShips());
     });
     //Check ship data
-    console.log('Checking computer ships...');
-    compBoard.checkShipData();
-    console.log('Checking player ships...');
-    playerBoard.checkShipData();
+    // console.log('Checking computer ships...');
+    // compBoard.checkShipData();
+    // console.log('Checking player ships...');
+    // playerBoard.checkShipData();
 
     UI.renderPlayerShips(playerBoard.getShips());
 
