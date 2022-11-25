@@ -67,6 +67,10 @@ body{
     transition: .1s;
     background-color: rgb(244, 68, 68);
 }
+.invalidmiss{
+    transition: .1s;
+    background-color: rgb(216, 255, 255);
+}
 .item:hover{
     /* background-color: rgb(66, 199, 84); */
 }
