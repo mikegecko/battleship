@@ -202,6 +202,17 @@ class DOMinterface {
         this.createShipSquares();
         this.renderShots(playerBoard);
     }
+    attachModalListener(){
+        const startBtn = document.querySelector('#start');
+        startBtn.addEventListener('click', (event) => {
+            this.hideStartModal();
+            g.startGame(event);
+        })
+    }
+    hideStartModal(){
+        const startModal = document.querySelector('.startmodal');
+        startModal.style.display = 'none';
+    }
 }
 // I Dont like these here
 const compBoard = new Gameboard();
@@ -215,39 +226,44 @@ class Game {
     constructor(params){
 
     }
-    init(){
-        const UI = new DOMinterface();
-    UI.createShotSquares();
-    UI.createShipSquares();
-    //Place ships TEMP
-    const playerShips = createShips();
-    playerShips.forEach(element => {
-        playerBoard.placeShip(element);
-    });
-    const computerShips = createShips();
-    computerShips.forEach(element => {
-        compBoard.placeShip(element);
-    });
-    //Debug button
-    const db = document.querySelector('#cheat');
-    db.addEventListener('click', function (e) {
-        UI.debugHandler(compBoard.getShips());
-    });
-    UI.renderPlayerShips(playerBoard.getShips());
-    }
-
-    turn(event){
-        const coord = [...event.target.id];
-        const x = parseInt(coord[0]) + 1;
-        const y = parseInt(coord[2]) + 1;
-        console.log(x, y);
-        const result = compBoard.checkValidMove(x, y);
-        if (result[0]) {
-            console.log('Player: ' + pl.play(x, y));
-            console.log('Computer: ' + cp.play(...cp.aiPlay()));
-        } else {
-            console.log('Duplicate move');
+    startGame(event){
+        UI.createShotSquares();
+        UI.createShipSquares();
+        //Place ships TEMP
+        const playerShips = createShips();
+        playerShips.forEach(element => {
+            playerBoard.placeShip(element);
+        });
+        const computerShips = createShips();
+        computerShips.forEach(element => {
+            compBoard.placeShip(element);
+        });
+        //Debug button
+        const db = document.querySelector('#cheat');
+        db.addEventListener('click', function (e) {
+            UI.debugHandler(compBoard.getShips());
+        });
+        UI.renderPlayerShips(playerBoard.getShips());
         }
+    
+        turn(event){
+            const coord = [...event.target.id];
+            const x = parseInt(coord[0]) + 1;
+            const y = parseInt(coord[2]) + 1;
+            console.log(x, y);
+            const result = compBoard.checkValidMove(x, y);
+            if (result[0]) {
+                console.log('Player: ' + pl.play(x, y));
+                console.log('Computer: ' + cp.play(...cp.aiPlay()));
+            } else {
+                console.log('Duplicate move');
+            }
+            //Check win/lose and display modal
+            
+    }
+    //This runs before game start
+    init(){
+        UI.attachModalListener();
     }
     gameEnd(){
 
@@ -294,6 +310,7 @@ function genCoords() {
 function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
+const UI = new DOMinterface();
 let g = new Game();
 g.init();
 export {
