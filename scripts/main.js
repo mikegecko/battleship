@@ -17,7 +17,7 @@ import {
     - Implement game loop:
         ✅ start game modal
         ✅ taking turns
-        ❌ win/lose modal
+        ✅ win/lose modal
     ❌ Create console div for displaying if the move hit/miss/sunk
     ❌ Move DOMinterface into separate module
     ❌ Implement placement system for ships
@@ -299,10 +299,10 @@ class Game {
             compBoard.placeShip(element);
         });
         //Debug button
-        const db = document.querySelector('#cheat');
-        db.addEventListener('click', function (e) {
-            UI.debugHandler(compBoard.getShips());
-        });
+        // const db = document.querySelector('#cheat');
+        // db.addEventListener('click', function (e) {
+        //     UI.debugHandler(compBoard.getShips());
+        // });
         UI.renderPlayerShips(playerBoard.getShips());
     }
 
