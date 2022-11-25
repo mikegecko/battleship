@@ -163,12 +163,12 @@ class DOMinterface {
                 let element = document.getElementById(`P${coord[0]-1}-${coord[1]-1}`);
                 element.classList.remove('.ship');
                 element.classList.add('hit');
-                element.textContent = 'X'
+                element.textContent = '💥'
             }
             else{
                 let element = document.getElementById(`${coord[0]-1}-${coord[1]-1}`);
                 element.classList.add('hit');
-                element.textContent = 'X'
+                element.textContent = '💥'
             }
             
         }
