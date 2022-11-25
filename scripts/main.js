@@ -16,12 +16,12 @@ import {
         ✅ hits/misses in player board 
     ✅ Refactor game function into Class
     - Implement game loop:
-        ❌ start game modal
+        ✅ start game modal
         ✅ taking turns
-        - win/lose modal
-    - Create console div for displaying if the move hit/miss/sunk
-    - Move DOMinterface into separate module
-    - Implement placement system for ships
+        ❌ win/lose modal
+    ❌ Create console div for displaying if the move hit/miss/sunk
+    ❌ Move DOMinterface into separate module
+    ❌ Implement placement system for ships
     
     EXTRA:
     - Implement Salvo game mode
@@ -202,31 +202,25 @@ class DOMinterface {
         this.createShipSquares();
         this.renderShots(playerBoard);
     }
-    attachModalListener(){
+    attachModalListener() {
         const startBtn = document.querySelector('#start');
         startBtn.addEventListener('click', (event) => {
             this.hideStartModal();
             g.startGame(event);
         })
     }
-    hideStartModal(){
+    hideStartModal() {
         const startModal = document.querySelector('.startmodal');
         startModal.style.display = 'none';
     }
 }
-// I Dont like these here
-const compBoard = new Gameboard();
-const playerBoard = new Gameboard();
-//Computer player
-const cp = new Player(playerBoard, compBoard, true);
-//Player
-const pl = new Player(playerBoard, compBoard, false);
+
 //Main Game Loop
 class Game {
-    constructor(params){
+    constructor(params) {
 
     }
-    startGame(event){
+    startGame(event) {
         UI.createShotSquares();
         UI.createShipSquares();
         //Place ships TEMP
@@ -244,28 +238,37 @@ class Game {
             UI.debugHandler(compBoard.getShips());
         });
         UI.renderPlayerShips(playerBoard.getShips());
+    }
+
+    turn(event) {
+        const coord = [...event.target.id];
+        const x = parseInt(coord[0]) + 1;
+        const y = parseInt(coord[2]) + 1;
+        console.log(x, y);
+        const result = compBoard.checkValidMove(x, y);
+        if (result[0]) {
+            console.log('Player: ' + pl.play(x, y));
+            console.log('Computer: ' + cp.play(...cp.aiPlay()));
+            this.checkWin();
+        } else {
+            console.log('Duplicate move');
         }
-    
-        turn(event){
-            const coord = [...event.target.id];
-            const x = parseInt(coord[0]) + 1;
-            const y = parseInt(coord[2]) + 1;
-            console.log(x, y);
-            const result = compBoard.checkValidMove(x, y);
-            if (result[0]) {
-                console.log('Player: ' + pl.play(x, y));
-                console.log('Computer: ' + cp.play(...cp.aiPlay()));
-            } else {
-                console.log('Duplicate move');
-            }
-            //Check win/lose and display modal
-            
     }
     //This runs before game start
-    init(){
+    init() {
         UI.attachModalListener();
     }
-    gameEnd(){
+    checkWin() {
+        //Check win/lose and display modal
+        if (playerBoard.fleetStatus() && !compBoard.fleetStatus()) {
+            //display win
+            console.log('YOU WIN!');
+        } else if (!playerBoard.fleetStatus() && compBoard.fleetStatus()) {
+            //display loss
+            console.log('YOU LOSE!');
+        }
+    }
+    gameEnd() {
 
     }
 }
@@ -310,6 +313,13 @@ function genCoords() {
 function randomIntFromInterval(min, max) {
     return Math.floor(Math.random() * (max - min + 1) + min);
 }
+//Global scope
+const compBoard = new Gameboard();
+const playerBoard = new Gameboard();
+//Computer player
+const cp = new Player(playerBoard, compBoard, true);
+//Player
+const pl = new Player(playerBoard, compBoard, false);
 const UI = new DOMinterface();
 let g = new Game();
 g.init();
