@@ -29,28 +29,32 @@ body{
     display: flex;
     flex-direction: column;
     background-color: #363636;
+    align-items: center;
     width: 100%;
     padding: 0 3rem 3rem 3rem;
 }
 .shot-container{
     display: grid;
-    grid-template-columns: repeat(10,3rem);
-    grid-template-rows: repeat(10,3rem);
+    grid-template-columns: repeat(10,2.5rem);
+    grid-template-rows: repeat(10,2.5rem);
     text-align: center;
     background-color: #2c2c2c;
 }
 .ship-container{
     display: grid;
-    grid-template-columns: repeat(10,3rem);
-    grid-template-rows: repeat(10,3rem);
+    grid-template-columns: repeat(10,2.5rem);
+    grid-template-rows: repeat(10,2.5rem);
     text-align: center;
     background-color: #2c2c2c;
 }
 .item{
+    display: flex;
     box-sizing: border-box;
     text-align: center;
-    padding: 1rem;
+    justify-content: center;
+    align-items: center;
     border: 1px solid #1f1f1f;
+    font-size: 14px;
 }
 .miss{
     background-color: aqua;
@@ -75,7 +79,7 @@ body{
     /* background-color: rgb(66, 199, 84); */
 }
 .ship-container .item:hover{
-    /* Change this to something better */
+    transition: .1s;
     background-color:  rgb(100, 100, 222);
 }
 .ship{
