@@ -63,18 +63,18 @@ class Gameboard {
         for (let index = 0; index < this.misses.length; index++) {
             const coord = this.misses[index];
             if(coord[0] == x && coord[1] == y){
-                //Move has already been made
-                return(false);
+                //Move has already been made (miss)
+                return([false,1]);
             }
         }
         for (let index = 0; index < this.hits.length; index++) {
             const coord = this.hits[index];
             if(coord[0] == x && coord[1] == y){
-                //Move has already been made
-                return(false);
+                //Move has already been made (hit)
+                return([false,2]);
             }
         }
-        return(true);
+        return([true,0]);
     }
     receiveAttack(x, y) {
         //determines whether or not the attack hit a ship and then sends the ‘hit’ function to the correct ship, or records the coordinates of the missed shot
